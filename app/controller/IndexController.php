@@ -3,16 +3,12 @@
 class IndexController {
     public function index()
     {
-        //echo 'I am in' . __CLASS__ . 'method' . __METHOD__;
-
         $view = new View();
-
         $view->render('index', [
-            'content' => 'Da vidim jel radi.'
+            'homeMessage' => 'Da vidim jel radi.'
         ]);
+
+        $db = new Db();
+        $db->connect();
     }
-    /*public function about()   //testna funkcija da vidim jel' mi radi dobro
-    {
-        echo 'I am in' . __CLASS__ . 'method' . __METHOD__;
-    }*/
 }

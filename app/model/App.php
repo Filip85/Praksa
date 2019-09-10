@@ -7,7 +7,6 @@ final class App {
 
         $path = trim($path, '/');
         $parts = explode('/', $path);
-        var_dump($parts);
 
         if(!isset($parts[0]) || empty($parts[0])) {
             $controller = 'Index';
@@ -25,12 +24,11 @@ final class App {
             $action = strtolower($parts[1]);
         }
 
-        var_dump($controller);
-        var_dump($action);
+        //echo $path;
 
         if(class_exists($controller) && method_exists($controller, $action)) {
             $IController = new $controller;
             $IController->$action();
         }
-    }
+     }
 }

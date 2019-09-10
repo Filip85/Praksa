@@ -1,20 +1,19 @@
 <?php
 
 class View {
-    protected $layout = 'header';
+    protected $layout = 'home';
     public function render($name, $args = []) {
         ob_start();
         extract($args);
-        include "app/view/$name.phtml";
-
-        //var_dump($name);
-
+        include BP . "app/view/$name.phtml";
         $content = ob_get_clean();
-        echo $content;
 
-        include "app/view/header.phtml";
-
-        //echo $content;
+        if ($this->layout) {
+            include BP . "app/view/{$this->layout}.phtml";
+        } else {
+            echo $content;
+        }
+        return $this;
 
     }
 

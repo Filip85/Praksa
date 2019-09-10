@@ -1,11 +1,10 @@
-<h1>Home</h1>
-
 <?php
+define('BP', '../');
 
 set_include_path(implode(PATH_SEPARATOR, array(
-    '../app/model',
-    '../app/controller',
-    '../app/view'
+    BP . 'app/model',
+    BP. 'app/controller',
+    BP. 'app/view'
 )));
 
 spl_autoload_register(function ($class) {
@@ -16,9 +15,5 @@ spl_autoload_register(function ($class) {
     }
     return false;
 });
-
-var_dump(get_include_path());
-
-//var_dump($_SERVER['REQUEST_URI']);
 
 App::start();
