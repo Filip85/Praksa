@@ -32,9 +32,14 @@ class BFC {
                 echo 'Please enter your username, email and password!';
             }
             else {
-                $hashedPwd = password_hash($password_1, PASSWORD_DEFAULT);
-                $user = new User();
-                $user->insert($username, $email, $hashedPwd);
+                if(($password_1 !== $password_2) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    echo 'Passwords dont match or email is invalid';
+                }
+                else {
+                    $hashedPwd = password_hash($password_1, PASSWORD_DEFAULT);
+                    $user = new User();
+                    $user->insert($username, $email, $hashedPwd);
+                }
             }
         }
     }
