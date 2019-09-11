@@ -30,5 +30,5 @@ final class App {
             $IController = new $controller;
             $IController->$action();
         }
-     }
+    }
 }

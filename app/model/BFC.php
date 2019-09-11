@@ -1,19 +1,18 @@
 <?php
 
-class BFC {
+class BFC extends Db{
     public function login(){
         $username = $_POST['username'];
         $password = $_POST['password'];
 
         if(isset($_POST['signInButton'])) {
-            $db = new Db();
-            $db->connect();
 
             if(empty($username) || empty($password)) {
                 echo 'Please enter your username and password!';
             }
             else {
-
+                $user = new User();
+                $user->getUser($username, $password);
             }
         }
     }
@@ -25,8 +24,7 @@ class BFC {
         $password_2 = $_POST['repeatPassword'];
 
         if(isset($_POST['signUpButton'])) {
-            $db = new Db();
-            $db->connect();
+            $db = Db::getInstance();
 
             if(empty($username) || empty($email) || empty($password_1) || empty($password_1)) {
                 echo 'Please enter your username, email and password!';
@@ -36,9 +34,34 @@ class BFC {
                     echo 'Passwords dont match or email is invalid';
                 }
                 else {
+                    $stmt = $db = Db::getInstance()->prepare("SELECT uidUser, pwdUser FROM users WHERE uidUser='Filip1231'");
+                    //$stmt->execute([$username]);
+
                     $hashedPwd = password_hash($password_1, PASSWORD_DEFAULT);
                     $user = new User();
                     $user->insert($username, $email, $hashedPwd);
+
+                    /*if($stmt->rowCount()) {
+                        while ($row = $stmt->fetch()) {
+                            if($row['uidUser'] > 0) {
+                                echo 'Please enter another Username';
+                            }
+                            else {
+                                $hashedPwd = password_hash($password_1, PASSWORD_DEFAULT);
+                                $user = new User();
+                                $user->insert($username, $email, $hashedPwd);
+                            }
+                        }
+                    }*/
+
+                    /*if($row > 1) {
+                        echo 'Please enter another Username';
+                    }
+                    else {
+                        $hashedPwd = password_hash($password_1, PASSWORD_DEFAULT);
+                        $user = new User();
+                        $user->insert($username, $email, $hashedPwd);
+                    }*/
                 }
             }
         }

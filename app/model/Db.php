@@ -2,30 +2,21 @@
 
 
 class Db {
-    private $servername;
-    private $username;
-    private $password;
-    private $dbname;
-    private $charset;
-    protected $pdo;
+    protected static $instance = null;
 
-    public function connect()
+    public static function getInstance()
     {
-        $this->servername = "localhost";
-        $this->username = "admin";
-        $this->password = "secretpassword";
-        $this->dbname = "User";
-        $this->charset = "utf8mb4";
-        $this->pdo="con";
+        $configs = include('../app/config.php.sample');
 
-        try {
-            $dsn = "mysql:host=" . $this->servername . ";dbname=" . $this->dbname . ";charset=" . $this->charset;
-            $this->pdo = new PDO($dsn, $this->username, $this->password);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $this->pdo;
-        } catch (PDOException $e) {
-            echo "Connect failed: " . $e->getMessage();
+        if(self::$instance === null) {
+            try {
+                $db = "mysql:host=" . $configs['servername'] . ";dbname=" . $configs['dbname'] . ";charset=" . $configs['charset'];
+                self::$instance = new PDO($db, $configs['username'], $configs['password']);
+                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                echo "Connect failed: " . $e->getMessage();
+            }
         }
-        echo "Konekcija ok";
+        return self::$instance;
     }
 }
