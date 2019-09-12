@@ -24,8 +24,6 @@ final class App {
             $action = strtolower($parts[1]);
         }
 
-        //echo $path;
-
         if(class_exists($controller) && method_exists($controller, $action)) {
             $IController = new $controller;
             $IController->$action();

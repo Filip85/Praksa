@@ -13,15 +13,17 @@ class User extends Db {
     {
         $db = Db::getInstance()->prepare("SELECT uidUser, pwdUser FROM users WHERE uidUser=?");
         $db->execute([$username]);
+
+        $row = $db->fetchAll();
+
+        foreach ($row as $r) {
+            return $r['uidUser'];
+            break;
+        }
+    }
+
+    public function updateUser($username, $password) {
+        $db = Db::getInstance()->prepare('UPDATE users SET pwdUser=? WHERE uidUser=?');
+        $db->execute([$username, $password]);
     }
 }
-
-        /*$stmt = $db->prepare("SELECT uidUser, pwdUser FROM users WHERE uidUser=?");
-        $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':username', $username);
-        $stmt->execute([$username]);
-
-        if($stmt->rowCount()) {
-            while ($row = $stmt->fetch()) {
-                echo $row['uidUser'];
-            }*/
