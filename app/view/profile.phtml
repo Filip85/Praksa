@@ -1,9 +1,11 @@
-<p>vcvcv</p>
-
-<p><?php echo $homeMessage ?></p>
-
 <form method="post" action="/login/signout">
     <input type="submit" name="signOutButton" value="Sign Out">
+</form>
+
+<br>
+<form method="post" enctype="multipart/form-data" action="/profile/uploadImage">
+    <input type="file" name="file">
+    <button type="submit" name="uploadImage">Upload image</button>
 </form>
 
 <ul>
@@ -14,3 +16,13 @@
         <a href='/settings'>My account</a>
     </li>
 </ul>
+
+
+<form method="post" action="/profile/deleteImg"
+<p><?php foreach ($homeMessage as $img) {
+    echo '<p><img src="img/'.$img['imageName'].'" height="400" width="400"></img>'; echo '<br>';
+    echo $img['uidUser'];
+    if($session === $img['uidUser']) {
+        echo '<button type="submit" name="fdf">Delete</button>';
+    }
+} ?></p>

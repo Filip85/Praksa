@@ -6,7 +6,7 @@ class Db {
 
     public static function getInstance()
     {
-        $configs = include('../app/config.php.sample');
+        $configs = include('../app/config.php.sample');           //izvući confg u App
 
         if(self::$instance === null) {
             try {
@@ -17,6 +17,6 @@ class Db {
                 echo "Connect failed: " . $e->getMessage();
             }
         }
-        return self::$instance;
+        return self::$instance;    //extends PDO -> new self
     }
 }

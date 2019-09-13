@@ -1,6 +1,7 @@
 <?php
 define('BP', '../');
 
+
 set_include_path(implode(PATH_SEPARATOR, array(
     BP . 'app/model',
     BP. 'app/controller',

@@ -23,7 +23,26 @@ class User extends Db {
     }
 
     public function updateUser($username, $password) {
-        $db = Db::getInstance()->prepare('UPDATE users SET pwdUser=? WHERE uidUser=?');
+        $db = Db::getInstance()->prepare('UPDATE users SET pwdUser=? WHERE uidUser=?     ');
         $db->execute([$username, $password]);
+    }
+
+    public function insertPicture($username, $imgName) {
+        $db = Db::getInstance()->prepare('INSERT INTO images (uidUser, imageName) VALUES (?, ?)');
+        $db->execute([$username, $imgName]);
+    }
+
+    public function getPictures() {
+        $db = Db::getInstance()->prepare("SELECT imageName, uidUser FROM images");
+        $db->execute();
+
+        $row = $db->fetchAll();
+
+        return $row;
+    }
+
+    public function deletePicture($username) {
+        $db = Db::getInstance()->prepare("DELETE FROM images WHERE uidUser=?");
+        $db->execute([$username]);
     }
 }
