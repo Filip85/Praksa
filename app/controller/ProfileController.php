@@ -7,6 +7,17 @@ class ProfileController {
         $session = Session::get('username');
 
         $user = new User();
+        /*$userName = $user->getAllUsers();
+        $array = new ArrayObject(array());
+
+        foreach ($userName as $name) {
+            $imageOwner = $user->getOwnerOfPicture($name['uidUser']);
+            if($name['uidUser'] === $imageOwner) {
+                $imgName = $user->getPictures($name['uidUser']);
+                $array->append($imgName);
+            }
+        }*/
+
 
         $imgName = $user->getPictures();
 
@@ -19,6 +30,7 @@ class ProfileController {
 
     public function uploadImage() {
         Session::start();
+
 
         if(isset($_POST['uploadImage'])) {
             $file = $_FILES['file'];
@@ -39,7 +51,7 @@ class ProfileController {
                 }
                 else {
                     $fileNameNew = uniqid('', true).".".$fileActualExt;
-                    $fileDestination = '/var/www/praksa.com/pub/img/'.$fileNameNew;
+                    $fileDestination = BP. 'pub/img/'.$fileNameNew;
 
                     move_uploaded_file($_fileTmpName, $fileDestination);
 
@@ -55,13 +67,13 @@ class ProfileController {
     }
 
     public function deleteImg() {
-        /*if(isset($_POST['$img[\'imageName\']'])) {
-            echo $_POST['$img[\'imageName\']'];
-        }*/
 
-        if(isset($_POST['fdf'])) {
-            header('Location: /profile');
-            echo array_keys($_POST);
-        }   //ovo vidjeti
+        if(isset($_POST['name'])) {
+            $user = new User();
+            $user->deletePicture($_POST['name']);
+            $path = BP. 'pub/img/'.$_POST['name'];
+            unlink($path);
+        }
+        header('Location: /profile');
     }
 }

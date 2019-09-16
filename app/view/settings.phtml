@@ -5,6 +5,11 @@
     <input type="text" name="password"><br><br>
     <input type="submit" name="changePassword" value="Change password">
 </form>
+<br>
+<form method="post" action="settings/changeStatus">
+    <p>Your profile is <?php echo $status ?>.</p>
+    <input type="submit" name="changeStatus" value="Change status">
+</form>
 
 <ul>
     <li>

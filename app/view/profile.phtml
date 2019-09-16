@@ -18,11 +18,13 @@
 </ul>
 
 
-<form method="post" action="/profile/deleteImg"
+<form method="POST" action="/profile/deleteImg">
 <p><?php foreach ($homeMessage as $img) {
     echo '<p><img src="img/'.$img['imageName'].'" height="400" width="400"></img>'; echo '<br>';
     echo $img['uidUser'];
-    if($session === $img['uidUser']) {
-        echo '<button type="submit" name="fdf">Delete</button>';
-    }
-} ?></p>
+    if($session === $img['uidUser']) { ?>
+        <!--<input type="hidden" name="name" value="<?php echo $img['imageName'] ?>">-->
+        <button type="submit" name="name" value="<?php echo $img['imageName'] ?>">Delete</button>
+
+    <?php } ;
+    }; ?></p></form>

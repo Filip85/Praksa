@@ -9,6 +9,15 @@ class User extends Db {
         $stmt->execute([$username, $mail, $password]);
     }
 
+    public function getAllUsers() {
+        $db = Db::getInstance()->prepare("SELECT * FROM users");
+        $db->execute();
+
+        $row = $db->fetchAll();
+
+        return $row;
+    }
+
     public function getUser($username, $password)
     {
         $db = Db::getInstance()->prepare("SELECT uidUser, pwdUser FROM users WHERE uidUser=?");
@@ -23,8 +32,8 @@ class User extends Db {
     }
 
     public function updateUser($username, $password) {
-        $db = Db::getInstance()->prepare('UPDATE users SET pwdUser=? WHERE uidUser=?     ');
-        $db->execute([$username, $password]);
+        $db = Db::getInstance()->prepare('UPDATE users SET pwdUser=? WHERE uidUser=?');
+        $db->execute([$password, $username]);
     }
 
     public function insertPicture($username, $imgName) {
@@ -33,16 +42,37 @@ class User extends Db {
     }
 
     public function getPictures() {
-        $db = Db::getInstance()->prepare("SELECT imageName, uidUser FROM images");
+        $db = Db::getInstance()->prepare("SELECT uidUser, imageName FROM images");
         $db->execute();
 
-        $row = $db->fetchAll();
+        return $row = $db->fetchAll();
 
-        return $row;
     }
 
-    public function deletePicture($username) {
-        $db = Db::getInstance()->prepare("DELETE FROM images WHERE uidUser=?");
+    public function getOwnerOfPicture($username) {
+        $db = Db::getInstance()->prepare("SELECT uidUser FROM images WHERE uidUser=?");
         $db->execute([$username]);
+
+        return $row = $db->fetchAll();
+
+    }
+
+    public function deletePicture($imagename) {
+        $db = Db::getInstance()->prepare("DELETE FROM images WHERE imageName=?");
+        $db->execute([$imagename]);
+    }
+
+    public function getStatus($username) {
+        $db = Db::getInstance()->prepare("SELECT userStatus FROM users WHERE uidUser=?");
+        $db->execute([$username]);
+
+        $row = $db->fetch();
+
+        return $row['userStatus'];
+    }
+
+    public function changeStatus($status, $username) {
+        $db = Db::getInstance()->prepare('UPDATE users SET userStatus=? WHERE uidUser=?');
+        $db->execute([$status, $username]);
     }
 }
