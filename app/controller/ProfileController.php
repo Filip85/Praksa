@@ -7,23 +7,25 @@ class ProfileController {
         $session = Session::get('username');
 
         $user = new User();
-        /*$userName = $user->getAllUsers();
-        $array = new ArrayObject(array());
 
-        foreach ($userName as $name) {
-            $imageOwner = $user->getOwnerOfPicture($name['uidUser']);
-            if($name['uidUser'] === $imageOwner) {
-                $imgName = $user->getPictures($name['uidUser']);
-                $array->append($imgName);
+        $img = $user->getPicturesInformation();
+        $imgObject = new ArrayObject(array());
+        $nameObject = new ArrayObject(array());
+
+        foreach ($img as $username) {
+            $status = $user->getStatus($username['uidUser']);
+
+            if($status['userStatus'] === 'public' || $username['uidUser'] === $session) {
+                $imgObject->append($username['imageName']);
+                $nameObject->append($username['uidUser']);
             }
-        }*/
 
-
-        $imgName = $user->getPictures();
+        }
 
         $view = new View();
         $view->render('profile', [
-            'homeMessage' => $imgName,
+            'homeMessage' => $nameObject,
+            'imageName' => $imgObject,
             'session' => $session
         ]);
     }

@@ -17,14 +17,17 @@
     </li>
 </ul>
 
+<link rel='stylesheet' href='style.css'>
 
-<form method="POST" action="/profile/deleteImg">
-<p><?php foreach ($homeMessage as $img) {
-    echo '<p><img src="img/'.$img['imageName'].'" height="400" width="400"></img>'; echo '<br>';
-    echo $img['uidUser'];
-    if($session === $img['uidUser']) { ?>
-        <!--<input type="hidden" name="name" value="<?php echo $img['imageName'] ?>">-->
-        <button type="submit" name="name" value="<?php echo $img['imageName'] ?>">Delete</button>
+<from method="POST" action="/profile/deleteImg">
+    <?php $index = 0;
+    foreach ($imageName as $img) {
+        echo '<p><img src="img/'.$imageName[$index].'" height="400" width="400">'; echo '<br>';
+        echo $homeMessage[$index];
+        if($session === $homeMessage[$index]) {
+            echo '<button type="submit" name="name" value="<?php echo $homeMessage[$index] ?>">Delete</button>'; ?>
 
-    <?php } ;
-    }; ?></p></form>
+
+        <?php } ; $index = $index + 1;
+        }; ?></p></form>
+

@@ -41,6 +41,7 @@ class RegistrationController
 
                         $user = new User();
                         $userExists = $user->getUser($username, $password_1);
+                        header('Location: /profile');
                         //echo $userExists;
                         if ($userExists === $username) {
                             Session::start();

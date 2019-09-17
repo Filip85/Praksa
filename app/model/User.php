@@ -18,9 +18,9 @@ class User extends Db {
         return $row;
     }
 
-    public function getUser($username, $password)
+    public function getUser($username)
     {
-        $db = Db::getInstance()->prepare("SELECT uidUser, pwdUser FROM users WHERE uidUser=?");
+        $db = Db::getInstance()->prepare("SELECT uidUser FROM users WHERE uidUser=?");
         $db->execute([$username]);
 
         $row = $db->fetchAll();
@@ -41,17 +41,9 @@ class User extends Db {
         $db->execute([$username, $imgName]);
     }
 
-    public function getPictures() {
+    public function getPicturesInformation() {
         $db = Db::getInstance()->prepare("SELECT uidUser, imageName FROM images");
         $db->execute();
-
-        return $row = $db->fetchAll();
-
-    }
-
-    public function getOwnerOfPicture($username) {
-        $db = Db::getInstance()->prepare("SELECT uidUser FROM images WHERE uidUser=?");
-        $db->execute([$username]);
 
         return $row = $db->fetchAll();
 
@@ -66,9 +58,7 @@ class User extends Db {
         $db = Db::getInstance()->prepare("SELECT userStatus FROM users WHERE uidUser=?");
         $db->execute([$username]);
 
-        $row = $db->fetch();
-
-        return $row['userStatus'];
+        return $row = $db->fetch();
     }
 
     public function changeStatus($status, $username) {

@@ -1,7 +1,5 @@
 <p>Welcome to "kao Instagram"!</p>
 
-<p><?php echo $homeMessage ?></p>
-
 <form action="/login">
     <button>Sign In</button>
 </form>
@@ -11,3 +9,17 @@
 <form action="/registration">
     <button>Sign Up</button>
 </form>
+
+<br>
+
+<form action="/index">
+    <button>Refresh images</button>
+    <?php ?>
+</form>
+
+<p><?php
+    foreach ($allImages as $img) {
+        echo '<div style="float: left; padding: 3.5px">';
+        echo '<p><img style="width: 371px; height: 371px" src="img/' . $img['imageName'] . '" height="400" width="400"></img>';
+        echo '</div>';
+    }; echo '<br>';?></p>

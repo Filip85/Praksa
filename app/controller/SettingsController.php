@@ -11,8 +11,10 @@ class SettingsController {
         $view = new View();
         $view->render('settings', [
             'homeMessage' => $_SESSION['username'],
-            'status' => $userStatus
+            'status' => $userStatus['userStatus']
         ]);
+
+
     }
 
     public function changePassword() {
@@ -36,8 +38,11 @@ class SettingsController {
             $user = new User();
             $status = $user->getStatus($session);
 
-            if($status === 'public') {
+            //echo $status;
+
+            if($status['userStatus'] === 'public') {
                 $user->changeStatus('private', $session);
+                echo $status;
             }
             else {
                 $user->changeStatus('public', $session);
