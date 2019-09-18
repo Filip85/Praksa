@@ -17,17 +17,48 @@
     </li>
 </ul>
 
-<link rel='stylesheet' href='style.css'>
+<!--<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            One of three columns
+        </div>
+        <div class="col-sm">
+            One of three columns
+        </div>
+        <div class="col-sm">
+            One of three columns
+        </div>
+    </div>
+</div>-->
 
-<from method="POST" action="/profile/deleteImg">
+<form method="POST" action="/profile/deleteImg">
     <?php $index = 0;
     foreach ($imageName as $img) {
-        echo '<p><img src="img/'.$imageName[$index].'" height="400" width="400">'; echo '<br>';
+        echo '<div style="float: left; padding: 0.07%">';
+        echo '<p><img style="width: 470px; height: 470px;"src="img/'.$imageName[$index].'">'; echo '<br>';
         echo $homeMessage[$index];
-        if($session === $homeMessage[$index]) {
-            echo '<button type="submit" name="name" value="<?php echo $homeMessage[$index] ?>">Delete</button>'; ?>
+        if($session === $homeMessage[$index]) {?>
+            <button type="submit" name="name" value="<?php echo $imageName[$index] ?>">Delete</button>
+    <?php };
+         $index = $index + 1;
+        echo '</div>';
+    }; ?></p></form>
 
 
-        <?php } ; $index = $index + 1;
-        }; ?></p></form>
-
+<?php
+$numOfCols = 4;
+$rowCount = 0;
+?>
+<div class="container">
+    <div class="row">
+    <?php
+    foreach ($imageName as $row){
+        ?>
+        <div class="col-md-3">
+                <img src="img/<?php echo $imageName[$rowCount]; ?>">
+            </div>
+        <?php
+        $rowCount++;
+        if($rowCount % $numOfCols == 0) echo '</div></div><div class="container"><div class="row">';
+    }
+    ?>

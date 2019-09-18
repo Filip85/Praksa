@@ -21,10 +21,10 @@ class LoginController {
             else {
                 $user = new User();
                 $userExists = $user->getUser($username);
-                var_dump($userExists);
-                /*$pwdcheck = password_verify($password, $userExists['pwdUser']);
-                echo $userExists['pwdUser'];*/
-                if(($userExists === $username) /*&& $pwdcheck === true*/) {
+                $pass = $user->getPassword($username);
+                $pwdcheck = password_verify($password, $pass);
+                echo $pwdcheck;
+                if(($userExists === $username)  && $pwdcheck === true) {
                     Session::start();
                     Session::set('username', $username);
                     $session = Session::get('username');

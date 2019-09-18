@@ -31,6 +31,18 @@ class User extends Db {
         }
     }
 
+    public function getPassword($username) {
+        $db = Db::getInstance()->prepare("SELECT pwdUser FROM users WHERE uidUser=?");
+        $db->execute([$username]);
+
+        $row = $db->fetchAll();
+
+        foreach ($row as $r) {
+            return $r['pwdUser'];
+            break;
+        }
+    }
+
     public function updateUser($username, $password) {
         $db = Db::getInstance()->prepare('UPDATE users SET pwdUser=? WHERE uidUser=?');
         $db->execute([$password, $username]);
@@ -64,5 +76,12 @@ class User extends Db {
     public function changeStatus($status, $username) {
         $db = Db::getInstance()->prepare('UPDATE users SET userStatus=? WHERE uidUser=?');
         $db->execute([$status, $username]);
+    }
+
+    public function countAllImages() {
+        $db = Db::getInstance()->prepare("SELECT COUNT(imageName) FROM images");
+        $db->execute();
+
+        return $row = $db->fetch();
     }
 }
