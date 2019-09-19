@@ -2,8 +2,13 @@
 
 class IndexController {
     public function index() {
+        $user = new Images();
+        $img = $user->countAllImages();
 
-        if(isset($_POST['countAllImages'])) {
+        $view = new View();
+        $view->render('index');
+
+        /*if(isset($_POST['countAllImages'])) {
             $user = new User();
             $img = $user->countAllImages();
 
@@ -17,14 +22,14 @@ class IndexController {
             $view->render('index',[
             'allImages' => ' '
             ]);
-        }
+        }*/
     }
 
     public function count() {
         $user = new User();
         $img = $user->countAllImages();
 
-        echo $img['COUNT(imageName)'];
+        echo 'Number of images: '.$img['COUNT(imageName)'];
 
         /*$view = new View();
         $view->render('index', [

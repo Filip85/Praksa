@@ -12,7 +12,25 @@
 
 <br>
 
-<form method="post" action="">
-    <input type="submit" name="countAllImages" value="Count images">
-    <p><?php echo $allImages ?></p>
-</form>
+<button id="img">Count images</button>
+
+<script>
+    $("#img").on('click', function () {
+        var imgDiv = document.getElementById('number');
+        imgDiv.removeChild(imgDiv.firstChild);
+
+        $.ajax('/index/count', {
+                success: function (data, status, xhr) {
+                    $('#number').append(data);
+                }
+            });
+    })
+</script>
+
+<div id="number">
+
+</div>
+
+
+
+

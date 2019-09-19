@@ -1,8 +1,53 @@
 <?php
 
-class User extends Db {
-    public function insert($username, $mail, $password)
-    {
+class User{
+    private $id;
+    private $username;
+    private $email;
+    private $password;
+    private $status;
+
+    /*public function __construct($id, $username, $email, $password, $status) {
+        $this->setId($id);
+        $this->setUsername($username);
+        $this->setEmail($email);
+        $this->setPassword($password);
+        $this->setStatus($status);
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function setUsername($username) {
+        $this->username = $username;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    public function setPassword($password) {
+        $this->password = $password;
+    }
+
+    public function setStatus($status) {
+        $this->status = $status;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getUsername() {
+        return $this->username;
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }*/
+
+    public function insert($username, $mail, $password) {
         $db = Db::getInstance();
 
         $stmt = $db->prepare("INSERT INTO users (uidUser, emailUser, pwdUser) VALUES (?, ?, ?)");
@@ -18,8 +63,8 @@ class User extends Db {
         return $row;
     }
 
-    public function getUser($username)
-    {
+    public function getUser($username) {
+        $users = [];
         $db = Db::getInstance()->prepare("SELECT uidUser FROM users WHERE uidUser=?");
         $db->execute([$username]);
 
@@ -29,6 +74,12 @@ class User extends Db {
             return $r['uidUser'];
             break;
         }
+
+        /*foreach ($row = $db->fetchAll() as $user) {
+            $users[] = new User($user->id, $user->username, $user->email, $user->password, $user->status);
+        }
+
+        return $users;*/
     }
 
     public function getPassword($username) {

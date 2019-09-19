@@ -17,19 +17,6 @@
     </li>
 </ul>
 
-<!--<div class="container">
-    <div class="row">
-        <div class="col-sm">
-            One of three columns
-        </div>
-        <div class="col-sm">
-            One of three columns
-        </div>
-        <div class="col-sm">
-            One of three columns
-        </div>
-    </div>
-</div>-->
 
 <form method="POST" action="/profile/deleteImg">
     <?php $index = 0;
@@ -43,22 +30,3 @@
          $index = $index + 1;
         echo '</div>';
     }; ?></p></form>
-
-
-<?php
-$numOfCols = 4;
-$rowCount = 0;
-?>
-<div class="container">
-    <div class="row">
-    <?php
-    foreach ($imageName as $row){
-        ?>
-        <div class="col-md-3">
-                <img src="img/<?php echo $imageName[$rowCount]; ?>">
-            </div>
-        <?php
-        $rowCount++;
-        if($rowCount % $numOfCols == 0) echo '</div></div><div class="container"><div class="row">';
-    }
-    ?>
