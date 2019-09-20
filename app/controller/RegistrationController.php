@@ -2,6 +2,8 @@
 
 class RegistrationController {
     public function index() {
+        Session::start();
+        Session::stop();
 
         $view = new View();
         $view->render('registration', [

@@ -111,4 +111,9 @@ class User {
         $db->execute([$status, $username]);
     }
 
+    public static function deleteUser($username) {
+        $db = Db::getInstance()->prepare("DELETE FROM users WHERE uidUser=?");
+        $db->execute([$username]);
+    }
+
 }

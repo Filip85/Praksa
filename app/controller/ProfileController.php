@@ -6,25 +6,31 @@ class ProfileController {
 
         $session = Session::get('username');
 
-        $img = Images::getPicturesInformation();
-        $imgObject = new ArrayObject(array());
-        $nameObject = new ArrayObject(array());
+        if(isset($_SESSION['username'])) {
+            $img = Images::getPicturesInformation();
+            $imgObject = new ArrayObject(array());
+            $nameObject = new ArrayObject(array());
 
-        foreach ($img as $username) {
-            $status = User::getStatus($username['uidUser']);
+            foreach ($img as $username) {
+                $status = User::getStatus($username['uidUser']);
 
-            if($status['userStatus'] === 'public' || $username['uidUser'] === $session) {
-                $imgObject->append($username['imageName']);
-                $nameObject->append($username['uidUser']);
+                if($status['userStatus'] === 'public' || $username['uidUser'] === $session) {
+                    $imgObject->append($username['imageName']);
+                    $nameObject->append($username['uidUser']);
+                }
             }
+
+            $view = new View();
+            $view->render('profile', [
+                'homeMessage' => $nameObject,
+                'imageName' => $imgObject,
+                'session' => $session
+            ]);
+        }
+        else {
+            echo 'Please, sign in!';
         }
 
-        $view = new View();
-        $view->render('profile', [
-            'homeMessage' => $nameObject,
-            'imageName' => $imgObject,
-            'session' => $session
-        ]);
     }
 
     public function uploadImage() {

@@ -6,6 +6,8 @@ class IndexController {
 
         $view = new View();
         $view->render('index');
+
+
     }
 
     public function count() {

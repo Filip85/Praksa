@@ -25,4 +25,9 @@ class Images {
 
         return $row = $db->fetch();
     }
+
+    public static function deleteUserImages($username) {
+        $db = Db::getInstance()->prepare("DELETE FROM images WHERE uidUser=?");
+        $db->execute([$username]);
+    }
 }

@@ -49,4 +49,17 @@ class SettingsController {
             header('Location: /settings');
         }
     }
+
+    public function deleteUserAccount() {
+        if(isset($_POST['removeAccount'])) {
+            Session::start();
+            $session = Session::get('username');
+
+            User::deleteUser($session);
+            Images::deleteUserImages($session);
+
+            header('Location: ../');
+        }
+
+    }
 }

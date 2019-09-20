@@ -31,4 +31,8 @@ class Session {
             unset($_SESSION['username']);
         }
     }
+
+    /*public static function loggedIn($session) {
+        header('Location: /profile');
+    }*/
 }

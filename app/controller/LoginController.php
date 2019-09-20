@@ -2,6 +2,8 @@
 
 class LoginController {
     public function index() {
+        Session::start();
+        Session::stop();
 
         $view = new View();
         $view->render('login', [
@@ -9,7 +11,6 @@ class LoginController {
         ]);
     }
     public function signin() {
-
         $username = $_POST['username'];
         $password = $_POST['password'];
 
