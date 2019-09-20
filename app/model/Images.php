@@ -1,12 +1,12 @@
 <?php
 
 class Images {
-    public function insertPicture($username, $imgName) {
+    public static function insertPicture($username, $imgName) {
         $db = Db::getInstance()->prepare('INSERT INTO images (uidUser, imageName) VALUES (?, ?)');
         $db->execute([$username, $imgName]);
     }
 
-    public function getPicturesInformation() {
+    public static function getPicturesInformation() {
         $db = Db::getInstance()->prepare("SELECT uidUser, imageName FROM images");
         $db->execute();
 
@@ -14,12 +14,12 @@ class Images {
 
     }
 
-    public function deletePicture($imagename) {
+    public static function deletePicture($imagename) {
         $db = Db::getInstance()->prepare("DELETE FROM images WHERE imageName=?");
         $db->execute([$imagename]);
     }
 
-    public function countAllImages() {
+    public static function countAllImages() {
         $db = Db::getInstance()->prepare("SELECT COUNT(imageName) FROM images");
         $db->execute();
 

@@ -2,6 +2,7 @@
 
 final class App {
     public static function start() {
+        include('../app/config.php');
         //$path = $_SERVER['REQUEST_URI'];
         $path = Request::pathInfo();
 
@@ -28,5 +29,10 @@ final class App {
             $IController = new $controller;
             $IController->$action();
         }
+
+    }
+
+    public static function config() {
+        return include('../app/config.php');
     }
 }

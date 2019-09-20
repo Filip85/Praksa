@@ -23,8 +23,7 @@ class SettingsController {
             $password = $_POST['password'];
             $hashedPwd = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-            $user = new User();
-            $user->updateUser($_SESSION['username'], $hashedPwd);
+            User::updateUser($_SESSION['username'], $hashedPwd);
 
             header('Location: /settings');
         }
@@ -35,17 +34,16 @@ class SettingsController {
             Session::start();
             $session = Session::get('username');
 
-            $user = new User();
-            $status = $user->getStatus($session);
+            $status = User::getStatus($session);
 
             //echo $status;
 
             if($status['userStatus'] === 'public') {
-                $user->changeStatus('private', $session);
+                User::changeStatus('private', $session);
                 echo $status;
             }
             else {
-                $user->changeStatus('public', $session);
+                User::changeStatus('public', $session);
             }
 
             header('Location: /settings');

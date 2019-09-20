@@ -6,20 +6,17 @@ class ProfileController {
 
         $session = Session::get('username');
 
-        $user = new User();
-
-        $img = $user->getPicturesInformation();
+        $img = Images::getPicturesInformation();
         $imgObject = new ArrayObject(array());
         $nameObject = new ArrayObject(array());
 
         foreach ($img as $username) {
-            $status = $user->getStatus($username['uidUser']);
+            $status = User::getStatus($username['uidUser']);
 
             if($status['userStatus'] === 'public' || $username['uidUser'] === $session) {
                 $imgObject->append($username['imageName']);
                 $nameObject->append($username['uidUser']);
             }
-
         }
 
         $view = new View();
@@ -59,8 +56,7 @@ class ProfileController {
 
                     $username = Session::get('username');
 
-                    $user = new User();
-                    $user->insertPicture($username, $fileNameNew);
+                    Images::insertPicture($username, $fileNameNew);
                 }
             }
 
@@ -71,8 +67,8 @@ class ProfileController {
     public function deleteImg() {
 
         if(isset($_POST['name'])) {
-            $user = new User();
-            $user->deletePicture($_POST['name']);
+            //$image = new Images();
+            Images::deletePicture($_POST['name']);
             $path = BP. 'pub/img/'.$_POST['name'];
             unlink($path);
         }

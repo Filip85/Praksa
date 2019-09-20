@@ -19,11 +19,9 @@ class LoginController {
                 echo 'Please enter your username and password!';
             }
             else {
-                $user = new User();
-                $userExists = $user->getUser($username);
-                $pass = $user->getPassword($username);
+                $pass = User::getPassword($username);
+                $userExists = User::getUser($username);
                 $pwdcheck = password_verify($password, $pass);
-                //echo $this->getUsername($username);
                 if(($userExists === $username)  && $pwdcheck === true) {
                     Session::start();
                     Session::set('username', $username);

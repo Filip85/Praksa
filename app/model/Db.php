@@ -4,9 +4,8 @@
 class Db{
     protected static $instance = null;
 
-    public static function getInstance()
-    {
-        $configs = include('../app/config.php'); //izvući confg u App
+    public static function getInstance() {
+        $configs = App::config();
 
         if(self::$instance === null) {
             try {

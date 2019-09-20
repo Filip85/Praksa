@@ -1,15 +1,14 @@
 <p>Welcome to "kao Instagram"!</p>
 
-<form action="/login">
-    <button>Sign In</button>
-</form>
+
+<a href="/login">Sign in</a>
 
 <br>
+<br>
 
-<form action="/registration">
-    <button>Sign Up</button>
-</form>
+<a href="/registration">Registration</a>
 
+<br>
 <br>
 
 <button id="img">Count images</button>
@@ -21,7 +20,7 @@
 
         $.ajax('/index/count', {
                 success: function (data, status, xhr) {
-                    $('#number').append(data);
+                    $('#number').html(data);
                 }
             });
     })

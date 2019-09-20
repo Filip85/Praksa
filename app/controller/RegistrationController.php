@@ -1,9 +1,7 @@
 <?php
 
-class RegistrationController
-{
-    public function index()
-    {
+class RegistrationController {
+    public function index() {
 
         $view = new View();
         $view->render('registration', [
@@ -11,8 +9,7 @@ class RegistrationController
         ]);
     }
 
-    public function signup()
-    {
+    public function signup() {
 
         $username = $_POST['username'];
         $email = $_POST['email'];
@@ -20,7 +17,6 @@ class RegistrationController
         $password_2 = $_POST['repeatPassword'];
 
         if (isset($_POST['signUpButton'])) {
-            //$db = Db::getInstance();
 
             if (empty($username) || empty($email) || empty($password_1) || empty($password_1)) {
                 echo 'Please enter your username, email and password!';
@@ -36,11 +32,9 @@ class RegistrationController
                         echo 'Please enter another username!';
                     } else {
                         $hashedPwd = password_hash($password_1, PASSWORD_DEFAULT);
-                        $user = new User();
-                        $user->insert($username, $email, $hashedPwd);
+                        User::insert($username, $email, $hashedPwd);
 
-                        $user = new User();
-                        $userExists = $user->getUser($username, $password_1);
+                        $userExists = User::getUser($username, $password_1);
                         header('Location: /profile');
                         //echo $userExists;
                         if ($userExists === $username) {
