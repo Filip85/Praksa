@@ -14,6 +14,11 @@ class LoginController {
         $username = $_POST['username'];
         $password = $_POST['password'];
 
+        if(!empty($_POST['remember'])) {
+            setcookie("username", $username, time() + 3600);
+            setcookie("password", $password, time() + 3600);
+        }
+
         if(isset($_POST['signInButton'])) {
 
             if(empty($username) || empty($password)) {
@@ -28,6 +33,18 @@ class LoginController {
                     Session::set('username', $username);
                     $session = Session::get('username');
                     echo $session;
+                    if(!empty($_POST['remember'])) {
+                        setcookie("username", $username, time() + 3600);
+                        setcookie("password", $password, time() + 3600);
+                    }
+                    else {
+                        if(isset($_COOKIE['username'])) {
+                            setcookie("username","");
+                        }
+                        if(isset($_COOKIE['password'])) {
+                            setcookie("password","");
+                        }
+                    }
                     header('Location: /profile');
 
                 }

@@ -1,28 +1,29 @@
-<p>Welcome to "kao Instagram"!</p>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href=" ">Inst'grem (eng. Bad copy)</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="">Welcome page</a></li>
+            <li><a href="/login">Sign in</a></li>
+            <li><a href="/registration">Registration</a></li>
+        </ul>
+    </div>
+</nav>
 
-
-<a href="/login">Sign in</a>
-
-<br>
-<br>
-
-<a href="/registration">Registration</a>
-
-<br>
-<br>
-
-<button id="img">Count images</button>
+<button class="btn btn-info" id="img">Count images</button>
 
 <script>
     $("#img").on('click', function () {
-        var imgDiv = document.getElementById('number');
-        imgDiv.removeChild(imgDiv.firstChild);
 
         $.ajax('/index/count', {
                 success: function (data, status, xhr) {
                     $('#number').html(data);
-                }
-            });
+                },
+            error: function () {
+                alert("Warning! An error has occurred.");
+            }
+        });
     })
 </script>
 
