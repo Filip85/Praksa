@@ -14,10 +14,9 @@
 <div style="text-align: center">
 <form method="post" action="/login/signin">
     Username:<br>
-    <input type="text" name="username" value="<?php if(isset($_COOKIE['username'])) { echo $_COOKIE['username'] ;} ?>"><br>
+    <input type="text" name="username"><br>
     Password:<br>
-    <input type="password" name="password" value="<?php if(isset($_COOKIE['password'])) { echo $_COOKIE['password'] ;} ?>"><br>
-    <input type="checkbox" name="remember" <?php if(isset($_COOKIE['username'])) { ?> checked <?php } ?>>Remember me!<br><br>
+    <input type="password" name="password"><br><br>
     <input class="btn btn-info" type="submit" name="signInButton" value="Sign In">
     <br>
     <br>

@@ -9,6 +9,7 @@ class View {
         $content = ob_get_clean();
 
         if ($this->layout) {
+
             include BP . "app/view/{$this->layout}.phtml";
         } else {
             echo $content;

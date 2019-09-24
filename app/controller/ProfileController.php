@@ -11,12 +11,16 @@ class ProfileController {
             $imgObject = new ArrayObject(array());
             $nameObject = new ArrayObject(array());
 
-            foreach ($img as $username) {
-                $status = User::getStatus($username['uidUser']);
 
-                if($status['userStatus'] === 'public' || $username['uidUser'] === $session) {
+            foreach ($img as $username) {
+                //$status = User::getStatus($username['uidUser']);
+                $status = User::getStatus($username['idUser']);
+                $user = User::getUserName($username['idUser']);
+
+                if($status['userStatus'] === 'public' || /*$username['idUser']*/ $user === $session) {
+                    $name = User::getUserName($username['idUser']);
                     $imgObject->append($username['imageName']);
-                    $nameObject->append($username['uidUser']);
+                    $nameObject->append($name);
                 }
             }
 
@@ -24,7 +28,7 @@ class ProfileController {
             $view->render('profile', [
                 'homeMessage' => $nameObject,
                 'imageName' => $imgObject,
-                'session' => $session
+                'session' => $session,
             ]);
         }
         else {
@@ -35,7 +39,7 @@ class ProfileController {
 
     public function uploadImage() {
         Session::start();
-
+        $session = Session::get('username');
 
         if(isset($_POST['uploadImage'])) {
             $file = $_FILES['file'];
@@ -44,6 +48,8 @@ class ProfileController {
             $_fileError = $_FILES['file']['error'];
             $_fileTmpName = $_FILES['file']['tmp_name'];
             $fileType = $_FILES['file']['type'];
+
+            $id = User::getUserId($session);
 
             $fileExt = explode('.', $_fileName);
             $fileActualExt = strtolower(end($fileExt));
@@ -62,7 +68,7 @@ class ProfileController {
 
                     $username = Session::get('username');
 
-                    Images::insertPicture($username, $fileNameNew);
+                    Images::insertPicture($id, $fileNameNew);
                 }
             }
 

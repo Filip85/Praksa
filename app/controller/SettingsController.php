@@ -5,14 +5,29 @@ class SettingsController {
         Session::start();
         $session = Session::get('username');
 
-        $user = new User();
-        $userStatus = $user->getStatus($session);
+        $id = User::getUserId($session); //novo
 
-        $view = new View();
+        $user = new User();
+        //$userStatus = $user->getStatus($session);
+
+        $userStatus = User::getStatus($id);
+
+        if(isset($_SESSION['username'])) {
+            $view = new View();
+            $view->render('settings', [
+                'homeMessage' => $_SESSION['username'],
+                'status' => $userStatus['userStatus']
+            ]);
+        }
+        else {
+            echo 'Please, sign in!';
+        }
+
+        /*$view = new View();
         $view->render('settings', [
             'homeMessage' => $_SESSION['username'],
             'status' => $userStatus['userStatus']
-        ]);
+        ]);*/
 
 
     }
@@ -34,9 +49,11 @@ class SettingsController {
             Session::start();
             $session = Session::get('username');
 
-            $status = User::getStatus($session);
+            $id = User::getUserId($session);
 
-            //echo $status;
+            $status = User::getStatus($id);
+
+            echo $status;
 
             if($status['userStatus'] === 'public') {
                 User::changeStatus('private', $session);
@@ -55,11 +72,11 @@ class SettingsController {
             Session::start();
             $session = Session::get('username');
 
-            User::deleteUser($session);
-            Images::deleteUserImages($session);
+            $userid = User::getUserId($session);
+            User::deleteUser($userid);
+            //Images::deleteUserImages($session);
 
             header('Location: ../');
         }
-
     }
 }

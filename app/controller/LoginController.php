@@ -33,7 +33,7 @@ class LoginController {
                     Session::set('username', $username);
                     $session = Session::get('username');
                     echo $session;
-                    if(!empty($_POST['remember'])) {
+                    /*if(!empty($_POST['remember'])) {
                         setcookie("username", $username, time() + 3600);
                         setcookie("password", $password, time() + 3600);
                     }
@@ -44,7 +44,7 @@ class LoginController {
                         if(isset($_COOKIE['password'])) {
                             setcookie("password","");
                         }
-                    }
+                    }*/
                     header('Location: /profile');
 
                 }

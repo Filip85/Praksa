@@ -54,13 +54,16 @@ class User {
         $stmt->execute([$username, $mail, $password]);
     }
 
-    public static function getAllUsers() {
-        $db = Db::getInstance()->prepare("SELECT * FROM users");
-        $db->execute();
+    public static function getUserId($username) {
+        $db = Db::getInstance()->prepare("SELECT idUser FROM users WHERE uidUser=?");
+        $db->execute([$username]);
 
         $row = $db->fetchAll();
 
-        return $row;
+        foreach ($row as $r) {
+            return $r['idUser'];
+            break;
+        }
     }
 
     public static function getUser($username) {
@@ -76,11 +79,50 @@ class User {
         }
 
         /*foreach ($row = $db->fetch() as $user) {
-            $users[] = new User("sa", "sasa", $user->email, $user->password, $user->status);
+            $users[] = new User("$user->id", "$user->username", $user->email, $user->password, $user->status);
         }
 
         return $users;*/
     }
+
+    public static function getUserName($id) {
+        $users = [];
+        $db = Db::getInstance()->prepare("SELECT uidUser FROM users WHERE idUser=?");
+        $db->execute([$id]);
+
+        $row = $db->fetchAll();
+
+        foreach ($row as $r) {
+            return $r['uidUser'];
+            break;
+        }
+
+        /*foreach ($row = $db->fetch() as $user) {
+            $users[] = new User("$user->id", "$user->username", $user->email, $user->password, $user->status);
+        }
+
+        return $users;*/
+    }
+
+    /*public static function getUser($id) {
+        $users = [];
+        $db = Db::getInstance()->prepare("SELECT uidUser FROM users WHERE idUser=?");
+        $db->execute([$id]);
+
+        $row = $db->fetchAll();
+
+        foreach ($row as $r) {
+            return $r['uidUser'];
+            break;
+        }
+
+        /*foreach ($row = $db->fetch() as $user) {
+            $users[] = new User("$user->id", "$user->username", $user->email, $user->password, $user->status);
+        }
+
+        return $users;
+    }*/
+
 
     public static function getPassword($username) {
         $db = Db::getInstance()->prepare("SELECT pwdUser FROM users WHERE uidUser=?");
@@ -99,9 +141,16 @@ class User {
         $db->execute([$password, $username]);
     }
 
-    public static function getStatus($username) {
+    /*public static function getStatus($username) {
         $db = Db::getInstance()->prepare("SELECT userStatus FROM users WHERE uidUser=?");
         $db->execute([$username]);
+
+        return $row = $db->fetch();
+    }*/
+
+    public static function getStatus($idUser) {
+        $db = Db::getInstance()->prepare("SELECT userStatus FROM users WHERE idUser=?");
+        $db->execute([$idUser]);
 
         return $row = $db->fetch();
     }
@@ -111,9 +160,9 @@ class User {
         $db->execute([$status, $username]);
     }
 
-    public static function deleteUser($username) {
-        $db = Db::getInstance()->prepare("DELETE FROM users WHERE uidUser=?");
-        $db->execute([$username]);
+    public static function deleteUser($id) {
+        $db = Db::getInstance()->prepare("DELETE FROM users WHERE idUser=?");
+        $db->execute([$id]);
     }
 
 }
